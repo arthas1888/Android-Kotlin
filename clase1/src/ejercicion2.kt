@@ -14,7 +14,8 @@ fun main(args: Array<String>) {
         val code = inputCode.toString().toInt()
         println("code: $code")
 
-        val p = products.firstOrNull { x -> x.code == code }
+        val p: Product? = products.find { x -> x.code == code }
+        println("${p.name}")
 
         if (p != null) {
             println("${p.name}")
