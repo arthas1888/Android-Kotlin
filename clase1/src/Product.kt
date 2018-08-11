@@ -5,4 +5,7 @@ class Product(code:Int, name:String) {
         this.code = code
         this.name = name
     }
+    constructor(code:Int) : this(code, "") {
+        this.code = code
+    }
 }
