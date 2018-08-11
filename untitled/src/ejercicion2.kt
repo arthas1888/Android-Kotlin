@@ -19,6 +19,5 @@ fun main(args: Array<String>) {
         if (p != null) {
             println("${p.name}")
         }
-
     }
 }
