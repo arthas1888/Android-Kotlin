@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">CalculadoraApplication</string>
+    <string name="action_settings">Settings</string>
+    <string name="str_number_1">Write number one</string>
+    <string name="str_number_2">Digite el numero 2</string>
+    <string name="required_field">Este campo es obligatorio</string>
+</resources>
