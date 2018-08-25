@@ -13,6 +13,7 @@ import co.edu.aulamatriz.listaapplication.models.Country
 import kotlinx.android.synthetic.main.activity_form.*
 import kotlinx.android.synthetic.main.content_form.*
 import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.Toast
 
 
 class FormActivity : AppCompatActivity() {
@@ -28,7 +29,7 @@ class FormActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         spinner.adapter = adapter
-        spinner.setOnItemSelectedListener(object : OnItemSelectedListener {
+        spinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>,
                                         selectedItemView: View,
                                         position: Int, id: Long) {
@@ -39,7 +40,7 @@ class FormActivity : AppCompatActivity() {
                 // your code here
             }
 
-        })
+        }
     }
 
     public fun onCancel(view: View) {
@@ -56,6 +57,7 @@ class FormActivity : AppCompatActivity() {
             var intent = Intent()
             intent.putExtra("country", Country(name, "", city, flag!!))
             setResult(1, intent)
+            Toast.makeText(this, "Pais creado", Toast.LENGTH_LONG).show()
             finish()
         }
     }
