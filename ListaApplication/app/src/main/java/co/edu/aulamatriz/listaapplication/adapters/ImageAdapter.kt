@@ -47,5 +47,7 @@ class ImageAdapter : BaseAdapter {
         return images[pos]
     }
 
-
+    fun getPos(id: Int): Int? {
+        return images.indexOfFirst { x -> x == id }
+    }
 }
