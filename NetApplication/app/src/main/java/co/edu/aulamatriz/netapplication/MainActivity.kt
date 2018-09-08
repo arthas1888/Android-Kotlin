@@ -1,5 +1,6 @@
 package co.edu.aulamatriz.netapplication
 
+import android.database.Cursor
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -22,21 +23,42 @@ import com.google.gson.reflect.TypeToken
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.content_main.*
 import android.support.v7.widget.LinearLayoutManager
+import android.widget.ArrayAdapter
+import android.widget.SimpleCursorAdapter
+import co.edu.aulamatriz.netapplication.databases.DBHelper
 
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var data: ArrayList<Song>
     lateinit var adapter: SongRecyclerAdapter
+    lateinit var dbHelper: DBHelper
+    lateinit var listAdapter: SimpleCursorAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        getSongsFromAPI()
+        dbHelper = DBHelper(this)
+        dbHelper.add(Song(0, "test name", "test autor", "test album"))
+        val cursor = dbHelper.readAll()
+        dbHelper.deleteAll()
+        updateList()
+        val arrayAdapter = ArrayAdapter<Song>(this,
+                android.R.layout.simple_list_item_1,
+                cursorToSongs(cursor)
+        )
+
+        listView.adapter = listAdapter
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+            val nombre = nameEditText.text.toString()
+            val autor = autorEditText.text.toString()
+            val album = albumEditText.text.toString()
+            val song = Song(0, nombre, autor, album)
+            dbHelper.add(song)
+            updateList()
         }
 
         data = ArrayList<Song>()
@@ -48,9 +70,25 @@ class MainActivity : AppCompatActivity() {
         recycler.adapter = adapter
     }
 
+    private fun cursorToSongs(cursor: Cursor): ArrayList<Song> {
+
+        val list = ArrayList<Song>()
+        if (cursor.count > 0) {
+            while (cursor.moveToNext()) {
+                val nombre = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_NAME))
+                val autor = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_AUTOR))
+                val album = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ALBUM))
+                val id = cursor.getInt(cursor.getColumnIndex(DBHelper.COLUMN_SERVER_ID))
+                val song = Song(id, nombre, autor, album)
+                list.add(song)
+            }
+        }
+        return list
+    }
+
     override fun onStart() {
         super.onStart()
-        getSongsFromAPI()
+        //getSongsFromAPI()
     }
 
 
@@ -76,9 +114,15 @@ class MainActivity : AppCompatActivity() {
 
                     val listType = object : TypeToken<ArrayList<Song>>() {}.type
 
-                    val founderList = Gson().fromJson<ArrayList<Song>>(response, listType)
-                    data.addAll(founderList)
-                    adapter.notifyDataSetChanged()
+                    val songs = Gson().fromJson<ArrayList<Song>>(response, listType)
+
+                    songs.forEach {
+                        dbHelper.add(it)
+                    }
+                    updateList()
+
+                    //data.addAll(founderList)
+                    //adapter.notifyDataSetChanged()
 
                 },
                 Response.ErrorListener {
@@ -87,6 +131,17 @@ class MainActivity : AppCompatActivity() {
 
 // Add the request to the RequestQueue.
         queue.add(stringRequest)
+    }
+
+    fun updateList(){
+        listAdapter = SimpleCursorAdapter(this,
+                android.R.layout.simple_list_item_2,
+                dbHelper.readAll(),
+                arrayOf(DBHelper.COLUMN_NAME, DBHelper.COLUMN_AUTOR),
+                intArrayOf(android.R.id.text1, android.R.id.text2),
+                0
+        )
+        listView.adapter = listAdapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
