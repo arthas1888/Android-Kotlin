@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
         if (sharedPreferences!!.isLogin()){
 
             startActivity(Intent(this@LoginActivity,
-                    MainActivity::class.java))
+                    PrincipalActivity::class.java))
             finish()
         }
     }
@@ -184,7 +184,7 @@ class LoginActivity : AppCompatActivity() {
             if (success!!) {
                 sharedPreferences!!.setLogin(true)
                 startActivity(Intent(this@LoginActivity,
-                        MainActivity::class.java))
+                        PrincipalActivity::class.java))
                 finish()
             } else {
                 password.error = getString(R.string.error_incorrect_password)
