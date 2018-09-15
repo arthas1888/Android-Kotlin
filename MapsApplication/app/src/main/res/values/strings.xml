@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MapsApplication</string>
+    <string name="action_settings">Settings</string>
+    <string name="api_google_key">AIzaSyD2zM9jAIDVcsx8Rn_3-2mCXEY-CncTE20</string>
+</resources>
