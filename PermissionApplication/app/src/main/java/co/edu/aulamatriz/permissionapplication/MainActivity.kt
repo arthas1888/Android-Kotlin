@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             getContacts()
         }
+        getString(R.string.share_data2)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int,

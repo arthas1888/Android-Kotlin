@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">PermissionApplication</string>
     <string name="action_settings">Settings</string>
+    <string name="share_data2">dato compartido test</string>
 </resources>
