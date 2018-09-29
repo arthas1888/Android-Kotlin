@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="co.edu.aulamatriz.dbapplication">
+    package="co.edu.aulamatriz.saveddataapplication">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <permission
-        android:name="co.edu.aulamatriz.e022fb94-c3f0-11e8-a355-529269fb1459.READ"
-        android:protectionLevel="signature" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,6 +12,10 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DrawerActivity"
+            android:label="@string/title_activity_drawer"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,12 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <provider
-            android:name=".providers.ExampleProvider"
-            android:authorities="co.edu.aulamatriz.dbapplication.providers.ExampleProvider"
-            android:exported="true"
-            android:permission="co.edu.aulamatriz.e022fb94-c3f0-11e8-a355-529269fb1459.READ" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".FileInternalActivity"></activity>
     </application>
 
 </manifest>
