@@ -15,9 +15,6 @@ import java.io.RandomAccessFile
 
 class MainActivity : AppCompatActivity() {
 
-    object sDataLock {
-
-    }
     private val TOP_SCORES = "TOP_SCORES"
     private var backupManager: BackupManager? = null
     private var prefs: SharedPreferences? = null
@@ -40,15 +37,11 @@ class MainActivity : AppCompatActivity() {
             saveData("save", enter_data.text.toString())
             show.isEnabled = true
 
-            try {
-                synchronized(sDataLock) {
-                    val dataFile = File(filesDir, TOP_SCORES)
-                    val raFile = RandomAccessFile(dataFile, "rw")
-                    raFile.writeChars(enter_data.text.toString())
-                }
-            } catch (e: IOException) {
-                Log.e("ERROR", "Unable to write to file")
-            }
+
+            val dataFile = File(filesDir, TOP_SCORES)
+            val raFile = RandomAccessFile(dataFile, "rw")
+            raFile.writeChars(enter_data.text.toString())
+
         }
         show.setOnClickListener {
             load_data.setText(showData())
