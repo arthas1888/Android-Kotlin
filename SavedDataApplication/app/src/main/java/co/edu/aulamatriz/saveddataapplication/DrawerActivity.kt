@@ -71,9 +71,11 @@ class DrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
             }
             R.id.nav_manage -> {
+                startActivity(Intent(this, FileCacheActivity::class.java))
 
             }
             R.id.nav_share -> {
+                startActivity(Intent(this, FileExternalActivity::class.java))
 
             }
             R.id.nav_send -> {
