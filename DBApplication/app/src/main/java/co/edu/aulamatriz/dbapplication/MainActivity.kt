@@ -24,6 +24,9 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.microsoft.appcenter.AppCenter
+import com.microsoft.appcenter.analytics.Analytics
+import com.microsoft.appcenter.crashes.Crashes
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -42,6 +45,10 @@ class MainActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        AppCenter.start(getApplication(), "c3620d61-6b57-449c-9168-1e4b4228cd58",
+                Analytics::class.java,
+                Crashes::class.java)
 
         var layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         layoutManager = GridLayoutManager(this, 1)
